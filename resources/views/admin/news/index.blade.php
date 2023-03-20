@@ -45,12 +45,29 @@
                             @foreach ($news as $row)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $row->title }}</td>
+                                    <td>{{ $row->category->name }}</td>
                                     <td>
-                                        <img src="" class="w-25" alt="">
+                                        <img src="{{ $row->image }}" class="w-25" alt="">
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ route('news.show', $row->id) }}" class="btn btn-primary">
+                                            <i class="bi bi-eye"></i> show
+                                        </a>
+
+                                        <a href="{{ route('news.edit', $row->id) }}" class="btn btn-warning">
+                                            <i class="bi bi-pencil"></i> edit
+                                        </a>
+
+                                        <form action="{{ route('news.destroy',$row->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger" type="submit">
+                                                <i class="bi bi-trash"></i> delete
+                                            </button>
+                                        </form>
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

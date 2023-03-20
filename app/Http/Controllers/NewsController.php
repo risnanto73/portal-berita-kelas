@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\News;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class NewsController extends Controller
@@ -17,7 +18,13 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index');
+        $news =  News::all();
+        $category = Category::all();
+
+        return view('admin.news.index', compact(
+            'news',
+            'category'
+        ));
     }
 
     /**
@@ -73,7 +80,13 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::all();
+        $news     = News::findOrFail($id);
+
+        return view('admin.news.show', compact(
+            'category',
+            'news'
+        ));
     }
 
     /**
@@ -84,7 +97,13 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::all();
+        $news     = News::findOrFail($id);
+
+        return view('admin.news.edit', compact(
+            'category',
+            'news'
+        ));
     }
 
     /**
@@ -94,9 +113,54 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+        $this->validate($request, [
+            'title'  => 'required|unique:news,title,' . $news->id,
+            'image'  => 'mimes:png,jpg,jpeg'
+        ]);
+
+        //check jika image kosong
+        if ($request->file('image') == '') {
+
+            //update data tanpa image
+            $news = News::findOrFail($news->id);
+            $news->update([
+                'title'         => $request->title,
+                'category_id'   => $request->category_id,
+                'description'   => $request->description,
+                'slug'          => Str::slug($request->name, '-')
+            ]);
+        } else {
+
+            //hapus image lama
+            Storage::disk('local')->delete('public/newss/' . basename($news->image));
+
+            //upload image baru
+            $image = $request->file('image');
+            $image->storeAs('public/newss', $image->hashName());
+
+            //update dengan image baru
+            $news = News::findOrFail($news->id);
+            $news->update([
+                'image'         => $image->hashName(),
+                'title'         => $request->title,
+                'category_id'   => $request->category_id,
+                'description'   => $request->description,
+                'slug'          => Str::slug($request->title, '-')
+            ]);
+        }
+
+        if ($news) {
+            return redirect()->route('news.index')->with([
+                Alert::success('Success', 'Berhasil diupdate')
+            ]);
+        } else {
+            return redirect()->route('news.index')->with([
+                Alert::error('Error', 'Gagal diupdate')
+            ]);
+        }
+
     }
 
     /**
@@ -107,6 +171,12 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = News::findOrFail($id);
+        Storage::disk('local')->delete('public/newss/' . basename($news->image));
+        $news->delete();
+
+        return redirect()->route('news.index')->with([
+            Alert::success('Success', 'Berhasil dihapus')
+        ]);
     }
 }
