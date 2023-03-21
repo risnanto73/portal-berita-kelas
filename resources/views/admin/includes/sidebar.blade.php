@@ -26,7 +26,7 @@
             </a>
           </li>
           <li>
-            <a href="components-badges.html">
+            <a href="{{ route('slider.index') }}">
               <i class="bi bi-circle"></i><span>Slider</span>
             </a>
           </li>
