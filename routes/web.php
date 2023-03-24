@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/category', CategoryController::class);
     Route::resource('/news', NewsController::class);
     Route::resource('/slider', SliderController::class);
-
+    Route::resource('/siswa', SiswaController::class);
+    
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class,'index'])->name('profile');
 });

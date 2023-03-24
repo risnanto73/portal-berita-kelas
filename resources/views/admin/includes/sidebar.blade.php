@@ -20,16 +20,25 @@
               <i class="bi bi-circle"></i><span>Category</span>
             </a>
           </li>
+
           <li>
             <a href="{{ route('news.index') }}">
               <i class="bi bi-circle"></i><span>News</span>
             </a>
           </li>
+
           <li>
             <a href="{{ route('slider.index') }}">
               <i class="bi bi-circle"></i><span>Slider</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('siswa.index') }}">
+              <i class="bi bi-circle"></i><span>Siswa</span>
+            </a>
+          </li>
+
         </ul>
       </li><!-- End Components Nav -->
 
