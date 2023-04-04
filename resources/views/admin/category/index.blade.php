@@ -77,6 +77,9 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    {{ $category->links('pagination::bootstrap-5') }}
+
                 </div>
                 <!-- End Table with stripped rows -->
             </div>

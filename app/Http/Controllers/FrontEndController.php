@@ -10,20 +10,19 @@ class FrontEndController extends Controller
 {
     public function index()
     {
+        $news = News::all();
         $nav_category = Category::all();
-        // $news     = News::orderBy('created_at', 'desc')->paginate(10);
-        $news     = News::latest()->paginate('3');
-        $inRandom = News::inRandomOrder()->limit(4)->get();
 
-        return view('frontend.parent', compact('nav_category', 'news', 'inRandom'));
+        return view('frontend.index', compact('news', 'nav_category'));
     }
 
     public function detailCategory($slug)
     {
         $category = Category::where('slug', $slug)->first();
         $news     = News::where('category_id',$category->id)->paginate(10);
+        $nav_category = Category::all();
 
-        return view('frontend.detail-category', compact('news'));
+        return view('frontend.detail-category', compact('news','nav_category'));
 
     }
 

@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::get('/', [\App\Http\Controllers\FrontEndController::class, 'index']);
-Route::get('/detailCategory/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailCategory'])->name('detailCategory');
+Route::get('/detail-category/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailCategory'])->name('detailCategory');
 Route::get('/detailNews/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailNews'])->name('detailNews');
 
 

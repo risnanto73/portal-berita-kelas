@@ -1,7 +1,7 @@
 @extends('frontend.parent')
 
 @section('content')
-    <h3 class="category-title">Detail Category</h3>
+    <h3 class="category-title">Search Results</h3>
 
     @foreach ($news as $row)
         <div class="d-md-flex post-entry-2 small-img">

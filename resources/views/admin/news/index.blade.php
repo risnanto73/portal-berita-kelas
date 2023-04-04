@@ -38,6 +38,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -49,6 +50,9 @@
                                     <td>{{ $row->category->name }}</td>
                                     <td>
                                         <img src="{{ $row->image }}" class="w-25" alt="">
+                                    </td>
+                                    <td>
+                                        {{ $row->created_at }}
                                     </td>
                                     <td>
                                         <a href="{{ route('news.show', $row->id) }}" class="btn btn-primary m-2">
@@ -72,6 +76,9 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    {{ $news->links('pagination::bootstrap-5') }}
+
                 </div>
                 <!-- End Table with stripped rows -->
             </div>
