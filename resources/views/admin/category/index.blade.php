@@ -41,6 +41,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -51,6 +52,9 @@
                                     <td>{{ $row->name }}</td>
                                     <td>
                                         <img src="{{ $row->image }}" class="w-25" alt="">
+                                    </td>
+                                    <td>
+                                        {{ $row->created_at }}
                                     </td>
                                     <td>
                                         <!-- Edit Modal -->

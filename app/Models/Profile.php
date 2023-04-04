@@ -12,8 +12,12 @@ class Profile extends Model
 
     protected $fillable = [
         'user_id',
+        'company',
+        'job',
+        'country',
+        'address',
         'phone',
-        'image'
+        'image',
     ];
 
     protected function image() : Attribute

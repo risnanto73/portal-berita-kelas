@@ -33,12 +33,6 @@
             </a>
           </li>
 
-          <li>
-            <a href="{{ route('siswa.index') }}">
-              <i class="bi bi-circle"></i><span>Siswa</span>
-            </a>
-          </li>
-
         </ul>
       </li><!-- End Components Nav -->
 
