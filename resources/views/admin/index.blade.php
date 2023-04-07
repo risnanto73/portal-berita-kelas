@@ -20,7 +20,7 @@
                     <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
                 </div>
 
-                <a href="{{ route('profile') }}" class="btn btn-primary">
+                <a href="#" class="btn btn-primary">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
         </div>

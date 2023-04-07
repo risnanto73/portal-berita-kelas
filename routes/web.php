@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SliderController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontEndController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,14 +34,50 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/category', CategoryController::class);
     Route::resource('/news', NewsController::class);
     Route::resource('/slider', SliderController::class);
+
+    // Search Category
+    Route::get('/search-category', [CategoryController::class, 'searchCategory'])->name('searchCategory');
+    Route::get('/search-news', [NewsController::class, 'searchNews'])->name('searchNews');
     
-    Route::get('/profile', [\App\Http\Controllers\ProfileController::class,'index'])->name('profile');
-    Route::post('/profile', [\App\Http\Controllers\ProfileController::class, 'storeProfile'])->name('storeProfile');
+    Route::get('/change-password', [ProfileController::class, 'editPassword'])->name('editPassword');
+    Route::put('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
+
 });
 
 
+// Route FrontEnd
 Route::get('/', [\App\Http\Controllers\FrontEndController::class, 'index']);
 Route::get('/detail-category/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailCategory'])->name('detailCategory');
-Route::get('/detailNews/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailNews'])->name('detailNews');
+Route::get('/detail-news/{slug}', [\App\Http\Controllers\FrontEndController::class, 'detailNews'])->name('detailNews');
+Route::get('/search-news-end',[FrontEndController::class, 'searchNewsEnd'])->name('searchNewsEnd');
 
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+    return 'link has been connected';
+});
+
+// Clear application cache:
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return 'Application cache has been cleared';
+});
+
+//Clear route cache:
+Route::get('/route-cache', function () {
+    Artisan::call('route:cache');
+    return 'Routes cache has been cleared';
+});
+
+//Clear config cache:
+Route::get('/config-cache', function () {
+    Artisan::call('config:cache');
+    return 'Config cache has been cleared';
+});
+
+// Clear view cache:
+Route::get('/view-clear', function () {
+    Artisan::call('view:clear');
+    return 'View cache has been cleared';
+});
 

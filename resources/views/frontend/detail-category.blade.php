@@ -5,7 +5,7 @@
 
     @foreach ($news as $row)
         <div class="d-md-flex post-entry-2 small-img">
-            <a href="#" class="me-4 thumbnail">
+            <a href="{{ route('detailNews', $row->slug) }}" class="me-4 thumbnail">
                 <img src="{{ $row->image }}" alt="" class="img-fluid">
             </a>
             <div>
@@ -14,7 +14,7 @@
                     <span>{{ $row->created_at }}</span>
                 </div>
                 <h3>
-                    <a href="#">{{ $row->title }}</a>
+                    <a href="{{ route('detailNews', $row->slug) }}">{{ $row->title }}</a>
                 </h3>
                 <p>
                     {!! Str::words($row->description, '15') !!}

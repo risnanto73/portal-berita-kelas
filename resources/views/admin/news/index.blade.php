@@ -22,6 +22,16 @@
                 @endforeach
             @endif
 
+            <div class="col-12">
+                <form action="{{ route('searchNews') }}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="search news"
+                            aria-describedby="button-addon2" name="keyword">
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
+            </div>
+
             <div class="container d-flex justify-content-end">
                 <a class="btn btn-primary" href="{{ route('news.create') }}">
                     <i class="bx bxs-plus-square"><span> Add News</span></i>
@@ -43,7 +53,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($news as $row)
+                            @forelse ($news as $row)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $row->title }}</td>
@@ -63,7 +73,7 @@
                                             <i class="bi bi-pencil"></i> edit
                                         </a>
 
-                                        <form action="{{ route('news.destroy',$row->id) }}" method="post">
+                                        <form action="{{ route('news.destroy', $row->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger m-2" type="submit">
@@ -73,7 +83,18 @@
 
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <th colspan="6" class="text-center">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <i class="bi bi-exclamation-octagon me-1"></i>
+                                            Data Kosong
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    </th>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
 

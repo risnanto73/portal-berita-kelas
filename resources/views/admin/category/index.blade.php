@@ -22,7 +22,17 @@
                 @endforeach
             @endif
 
-            <div class="container d-flex justify-content-end">
+            <div class="col-12">
+                <form action="{{ route('searchCategory') }}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="search category"
+                            aria-describedby="button-addon2" name="keyword">
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end">
                 <!-- Create Modal -->
                 <button type="button" class="btn btn-primary my-auto" data-bs-toggle="modal"
                     data-bs-target="#createCategoryModal">
@@ -46,7 +56,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($category as $row)
+
+                            @forelse ($category as $row)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $row->name }}</td>
@@ -74,7 +85,20 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <th colspan="5" class="text-center">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <i class="bi bi-exclamation-octagon me-1"></i>
+                                            Data Kosong
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    </th>
+                                </tr>
+                            @endforelse
+
+
                         </tbody>
                     </table>
 

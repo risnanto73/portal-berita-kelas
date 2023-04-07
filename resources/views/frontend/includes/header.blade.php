@@ -26,12 +26,20 @@
 
             <!-- ======= Search Form ======= -->
             <div class="search-form-wrap js-search-form-wrap">
-                <form action="search-result.html" class="search-form">
-                    <span class="icon bi-search"></span>
-                    <input type="text" placeholder="Search" class="form-control">
-                    <button class="btn js-search-close"><span class="bi-x"></span></button>
+                <form action="{{ route('searchNewsEnd') }}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="search news"
+                            aria-describedby="button-addon2" name="keyword">
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
                 </form>
             </div><!-- End Search Form -->
+
+            @guest
+                <a href="/login">Login</a>
+            @else
+                <a href="{{ route('home') }}">Home</a>
+            @endguest
 
         </div>
 

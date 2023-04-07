@@ -129,7 +129,7 @@ class NewsController extends Controller
                 'title'         => $request->title,
                 'category_id'   => $request->category_id,
                 'description'   => $request->description,
-                'slug'          => Str::slug($request->name, '-')
+                'slug'          => Str::slug($request->title, '-')
             ]);
         } else {
 
@@ -178,5 +178,13 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with([
             Alert::success('Success', 'Berhasil dihapus')
         ]);
+    }
+
+    public function searchNews(Request $request)
+    {
+        $keyword = $request->keyword;
+        $news    = News::where('title', 'like', '%' . $keyword . '%')->paginate(5);
+
+        return view('admin.news.index', compact('news'));
     }
 }

@@ -147,4 +147,13 @@ class CategoryController extends Controller
             Alert::success('Success', 'Berhasil dihapus')
         ]);
     }
+
+    public function searchCategory(Request $request)
+    {
+        $keyword = $request->keyword;
+        $category = Category::where('name', 'like', '%' . $keyword . '%')->paginate(5);
+
+        return view('admin.category.index', compact('category'));
+    }
+    
 }

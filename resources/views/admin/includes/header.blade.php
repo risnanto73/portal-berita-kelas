@@ -2,7 +2,7 @@
  <header id="header" class="header fixed-top d-flex align-items-center">
 
      <div class="d-flex align-items-center justify-content-between">
-         <a href="index.html" class="logo d-flex align-items-center">
+         <a href="/home" class="logo d-flex align-items-center">
              <img src="assets/img/logo.png" alt="">
              <span class="d-none d-lg-block">NiceAdmin</span>
          </a>
@@ -30,11 +30,17 @@
                      </li>
 
                      <li>
-                         <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                         <a class="dropdown-item d-flex align-items-center" href="#">
                              <i class="bi bi-person"></i>
                              <span>My Profile</span>
                          </a>
                      </li>
+                     <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('editPassword') }}">
+                            <i class="bi bi-lock"></i>
+                            <span>Change Password</span>
+                        </a>
+                    </li>
                      <li>
                          <hr class="dropdown-divider">
                      </li>
