@@ -36,14 +36,14 @@
     </div>
 
     {{-- <div class="carousel-inner">
-            @php $i = 1; @endphp
-            @foreach ($slider as $row)
-                <div class="carousel-item {{ $i == '1' ? 'active':'' }}">
-                    @php $i++; @endphp
-                    <img src="{{ $row->image }}" class="d-block w-100" alt="...">
-                </div>
-            @endforeach
-        </div> --}}
+        @php $i = 1; @endphp
+        @foreach ($slider as $row)
+            <div class="carousel-item {{ $i == '1' ? 'active' : '' }}">
+                @php $i++; @endphp
+                <img src="{{ $row->image }}" class="d-block w-100" alt="...">
+            </div>
+        @endforeach
+    </div> --}}
 
     @forelse ($news as $row)
         <div class="d-md-flex post-entry-2 small-img mt-3">
@@ -79,5 +79,4 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endforelse
-    
 @endsection
