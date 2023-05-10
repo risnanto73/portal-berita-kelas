@@ -25,9 +25,9 @@ use App\Http\Controllers\FrontEndController;
 
 Auth::routes();
 
-Route::match(['get', 'post'], '/register', function () {
-    return redirect('login');
-});
+// Route::match(['get', 'post'], '/register', function () {
+//     return redirect('login');
+// });
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

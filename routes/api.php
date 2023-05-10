@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
+// use App\Http\Controllers\Auth\RegisterController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,20 +20,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//login
-Route::post('login', [App\Http\Controllers\API\UserController::class, 'login']);
-//register
-Route::post('register', [App\Http\Controllers\API\UserController::class, 'register']);
-//logout
-Route::post('logout', [App\Http\Controllers\API\UserController::class, 'logout'])->middleware('auth:sanctum');
-//update-password
-Route::post('update-password', [App\Http\Controllers\API\UserController::class, 'updatePassword'])->middleware('auth:sanctum');
+//route login
+Route::post('login', [\App\Http\Controllers\API\AuthController::class, 'login']);
+//route register
+Route::post('register', [\App\Http\Controllers\API\AuthController::class, 'register']);
+//route logout
+Route::post('logout', [\App\Http\Controllers\API\AuthController::class, 'logout'])->middleware('auth:sanctum');
+//route update-password
+Route::post('update-password', [\App\Http\Controllers\API\AuthController::class, 'updatePassword'])->middleware('auth:sanctum');
 
-//get all category
-Route::get('category', [App\Http\Controllers\API\CategoryController::class, 'index']);
-//store category
-Route::post('category', [App\Http\Controllers\API\CategoryController::class, 'store'])->middleware('auth:sanctum');
-//show category
-Route::get('category/{slug}', [App\Http\Controllers\API\CategoryController::class, 'show']);
+//get all user
+Route::get('getAllUser', [\App\Http\Controllers\API\UserController::class, 'getAllUser'])->middleware('auth:sanctum');
+Route::get('getUserById/{id}', [\App\Http\Controllers\API\UserController::class, 'getUserById'])->middleware('auth:sanctum');
+
+
+//category
+Route::get('category', [\App\Http\Controllers\API\CategoryController::class, 'index']);
+Route::post('category', [\App\Http\Controllers\API\CategoryController::class, 'create'])->middleware('auth:sanctum');
+Route::delete('category/{id}', [\App\Http\Controllers\API\CategoryController::class, 'destroy'])->middleware('auth:sanctum');
 //update category
-Route::put('category/{id}', [App\Http\Controllers\API\CategoryController::class, 'update'])->middleware('auth:sanctum');
+Route::post('category/{id}', [\App\Http\Controllers\API\CategoryController::class, 'update'])->middleware('auth:sanctum');

@@ -25,14 +25,16 @@ class ProfileController extends Controller
 
         $currentPasswordStatus = Hash::check($request->current_password, auth()->user()->password);
         if ($currentPasswordStatus) {
-
-            User::findOrFail(Auth::user()->id)->update([
-                'password' => Hash::make($request->password)
-            ]);
-            
-            return redirect()->back()->with([Alert::success('Success','Password berhasil diupdate')]);
+            if ($request->password == $request->confirmation_password) {
+                $user = User::find(Auth::user()->id);
+                $user->password = Hash::make($request->password);
+                $user->save();
+                return redirect()->back()->with([Alert::success('Success', 'Password Berhasil Diubah')]);
+            } else {
+                return redirect()->back()->with([Alert::error('Error', 'Password Tidak Sama')]);
+            }
         } else {
-            return redirect()->back()->with([Alert::error('Error','Password Salah')]);
+            return redirect()->back()->with([Alert::error('Error', 'Password Salah')]);
         }
     }
 }
