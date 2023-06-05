@@ -15,13 +15,10 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->timestamps(); 
+            //1. created_at
+            //2. updated_at
             
-            $table->string('name');
-            $table->string('slug');
-            $table->string('image');
-
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 

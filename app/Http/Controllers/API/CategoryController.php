@@ -65,7 +65,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-            $category = Category::findOrfail($id);
+            $category = Category::findOrFail($id);
             //delete image
             Storage::disk('local')->delete('public/categories/' . basename($category->image));
             //delete data
@@ -85,47 +85,78 @@ class CategoryController extends Controller
         }
     }
 
-    //update data
     public function update(Request $request, $id)
     {
         try {
-            //validate request
+
+            //request validate
             $this->validate($request, [
-                'name'  => 'required|string|max:255',
-                'image' => 'required|mimes:png,jpg,jpeg'
+                'name'  => 'required|unique:categories,name,' . $id,
+                'image' => 'mimes:png,jpg,jpeg|max:2000'
             ]);
 
-            $category = Category::findOrfail($id);
+            //get data category by id
+            $category = Category::findOrFail($id);
 
-            if ($request->file('image')) {
-                //delete old image
+            //check jika image kosong
+            if ($request->file('image') == '') {
+
+                //update data tanpa image
+                $category->update([
+                    'name'  => $request->name,
+                    'slug'  => Str::slug($request->name, '-')
+                ]);
+
+                if ($category) {
+                    return ResponseFormatter::success($category, 'Data category berhasil diupdate');
+                } else {
+                    return ResponseFormatter::error(null, 'Data category tidak ada', 404);
+                }
+            } else {
+
+                //delete image lama
                 Storage::disk('local')->delete('public/categories/' . basename($category->image));
-                //upload new image
+
+                //upload image baru
                 $image = $request->file('image');
                 $image->storeAs('public/categories', $image->hashName());
-                //update data
+
+                //update data dengan image baru
                 $category->update([
                     'name'  => $request->name,
                     'slug'  => Str::slug($request->name, '-'),
                     'image' => $image->hashName()
                 ]);
-            } else {
-                //update data
-                $category->update([
-                    'name'  => $request->name,
-                    'slug'  => Str::slug($request->name, '-')
-                ]);
-            }
 
-            if ($category) {
-                return ResponseFormatter::success($category, 'Data category berhasil diupdate');
-            } else {
-                return ResponseFormatter::error(null, 'Data category tidak ada', 404);
+                if ($category) {
+                    return ResponseFormatter::success($category, 'Data category berhasil diupdate');
+                } else {
+                    return ResponseFormatter::error(null, 'Data category tidak ada', 404);
+                }
             }
         } catch (\Error $error) {
             return ResponseFormatter::error([
                 'data'      => null,
                 'message' => 'Data gagal diupdate',
+                'error'   => $error
+            ]);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $category = Category::findOrFail($id);
+
+            if ($category) {
+                return ResponseFormatter::success($category, 'Data berhasil ditampilkan');
+            } else {
+                return ResponseFormatter::error(null, 'Data gagal ditampilkan', 404);
+            }
+        } catch (\Error $error) {
+            return ResponseFormatter::error([
+                'data'      => null,
+                'message' => 'Data gagal ditampilkan',
                 'error'   => $error
             ]);
         }

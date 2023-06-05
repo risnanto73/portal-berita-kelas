@@ -138,7 +138,7 @@ class NewsController extends Controller
 
             //upload image baru
             $image = $request->file('image');
-            $image->storeAs('public/newss', $image->hashName());
+            $image->storeAs('public/newss/', $image->hashName());
 
             //update dengan image baru
             $news = News::findOrFail($news->id);
